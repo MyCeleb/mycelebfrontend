@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./Login/Login";
 import HomeCelebrity from "./Celebrity/HomeCelebrity";
 import CelebrityNavBar from "./NavBars/CelebrityNavBar";
+import AddProfile from "./Celebrity/AddProfile";
+import MyProfile from "./Celebrity/MyProfile";
 function App() {
   const [storedToken, setStoredToken] = useState(localStorage.getItem("token"));
   const [profile, setProfile] = useState(null);
@@ -39,6 +41,8 @@ function App() {
               path="/"
               element={<HomeCelebrity setStoredToken={setStoredToken} />}
             />
+            <Route path="/addprofile" element={<AddProfile />} />
+            <Route path="/myprofile" element={<MyProfile />} />
           </Routes>
         </Router>
       )}

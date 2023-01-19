@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 function SignUp({ setStoredToken }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
   const [phone_number, setPhoneNumber] = useState("");
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -28,13 +29,14 @@ function SignUp({ setStoredToken }) {
       .then((res) => res.json())
       .then((data) => {
         localStorage.setItem("token", data.jwt);
-
         setStoredToken(data.jwt);
       });
 
     setUsername("");
     setEmail("");
     setPassword("");
+
+    navigate("/");
   };
   return (
     <div className="App">
