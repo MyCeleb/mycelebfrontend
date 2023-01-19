@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Login({ setStoredToken }) {
   const [username, setUsername] = useState("");
@@ -61,6 +61,7 @@ function Login({ setStoredToken }) {
         </label>
         <button onClick={handleSubmit}>Submit</button>
       </form>
+      <Link to="/signup">Sign Up</Link>
     </div>
   );
 }
