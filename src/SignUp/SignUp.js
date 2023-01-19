@@ -5,6 +5,7 @@ function SignUp({ setStoredToken }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
+  const [phone_number, setPhoneNumber] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -19,13 +20,15 @@ function SignUp({ setStoredToken }) {
           username,
           email,
           password,
+          role,
+          phone_number,
         },
       }),
     })
       .then((res) => res.json())
       .then((data) => {
         localStorage.setItem("token", data.jwt);
-        console.log(data);
+
         setStoredToken(data.jwt);
       });
 
@@ -56,6 +59,15 @@ function SignUp({ setStoredToken }) {
             <option value="user">User</option>
             <option value="celebrity">Celebrity</option>
           </select>
+        </label>
+        <label>
+          Phone Number:
+          <input
+            type="text"
+            name="name"
+            value={phone_number}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
         </label>
         <label>
           Email:

@@ -1,35 +1,61 @@
 import React, { useState, useEffect } from "react";
 import SignUp from "./SignUp/SignUp";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Hello from "./Hello";
 import Login from "./Login/Login";
+import HomeCelebrity from "./Celebrity/HomeCelebrity";
+import CelebrityNavBar from "./NavBars/CelebrityNavBar";
 function App() {
   const [storedToken, setStoredToken] = useState(localStorage.getItem("token"));
+  const [profile, setProfile] = useState(null);
+  const [role, setRole] = useState("");
+  const [name, setName] = useState("");
   useEffect(() => {
-    console.log(storedToken);
+    if (storedToken) {
+      fetch("/api/v1/profile ", {
+        method: "GET",
+        headers: {
+          Accepts: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setProfile(data.user.profile);
+          setRole(data.user.role);
+          setName(data.user.username);
+        });
+    }
   }, [storedToken]);
 
   return (
     <div>
-      <Router>
-        <Routes>
-          {storedToken ? (
+      {storedToken && role === "celebrity" && (
+        <Router>
+          <CelebrityNavBar name={name} profile={profile} />
+
+          <Routes>
             <Route
               path="/"
-              element={<Hello setStoredToken={setStoredToken} />}
+              element={<HomeCelebrity setStoredToken={setStoredToken} />}
             />
-          ) : (
+          </Routes>
+        </Router>
+      )}
+      {!storedToken && (
+        <Router>
+          <Routes>
             <Route
               path="/"
+              element={<Login setStoredToken={setStoredToken} />}
+            />
+            <Route
+              path="/signup"
               element={<SignUp setStoredToken={setStoredToken} />}
             />
-          )}
-          <Route
-            path="/login"
-            element={<Login setStoredToken={setStoredToken} />}
-          />
-        </Routes>
-      </Router>
+          </Routes>
+        </Router>
+      )}
     </div>
   );
 }
