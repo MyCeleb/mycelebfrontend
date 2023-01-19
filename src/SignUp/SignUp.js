@@ -4,6 +4,7 @@ function SignUp({ setStoredToken }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("user");
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -44,6 +45,17 @@ function SignUp({ setStoredToken }) {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+        </label>
+        <label>
+          Role:
+          <select
+            name="role"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          >
+            <option value="user">User</option>
+            <option value="celebrity">Celebrity</option>
+          </select>
         </label>
         <label>
           Email:
