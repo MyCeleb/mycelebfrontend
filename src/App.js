@@ -12,6 +12,7 @@ function App() {
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
   const [loggedInUserId, setLoggedInUserId] = useState("");
+
   useEffect(() => {
     if (storedToken) {
       fetch("/api/v1/profile ", {
@@ -47,7 +48,10 @@ function App() {
               path="/addprofile"
               element={<AddProfile loggedInUserId={loggedInUserId} />}
             />
-            <Route path="/myprofile" element={<MyProfile />} />
+            <Route
+              path="/myprofile"
+              element={<MyProfile loggedInUserId={loggedInUserId} />}
+            />
           </Routes>
         </Router>
       )}
