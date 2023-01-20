@@ -11,6 +11,7 @@ function App() {
   const [profile, setProfile] = useState(null);
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
+  const [loggedInUserId, setLoggedInUserId] = useState("");
   useEffect(() => {
     if (storedToken) {
       fetch("/api/v1/profile ", {
@@ -26,6 +27,7 @@ function App() {
           setProfile(data.user.profile);
           setRole(data.user.role);
           setName(data.user.username);
+          setLoggedInUserId(data.user.id);
         });
     }
   }, [storedToken]);
@@ -41,7 +43,10 @@ function App() {
               path="/"
               element={<HomeCelebrity setStoredToken={setStoredToken} />}
             />
-            <Route path="/addprofile" element={<AddProfile />} />
+            <Route
+              path="/addprofile"
+              element={<AddProfile loggedInUserId={loggedInUserId} />}
+            />
             <Route path="/myprofile" element={<MyProfile />} />
           </Routes>
         </Router>
