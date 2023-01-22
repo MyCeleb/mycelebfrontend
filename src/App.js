@@ -6,9 +6,11 @@ import HomeCelebrity from "./Celebrity/HomeCelebrity";
 import CelebrityNavBar from "./NavBars/CelebrityNavBar";
 import AddProfile from "./Celebrity/AddProfile";
 import MyProfile from "./Celebrity/MyProfile";
+import AddRates from "./Celebrity/AddRates";
 function App() {
   const [storedToken, setStoredToken] = useState(localStorage.getItem("token"));
-  const [profile, setProfile] = useState(null);
+  const [profile_state, setProfileState] = useState("");
+  const [profile, setProfile] = useState({});
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
   const [loggedInUserId, setLoggedInUserId] = useState("");
@@ -25,24 +27,33 @@ function App() {
       })
         .then((res) => res.json())
         .then((data) => {
-          setProfile(data.user.profile);
+          setProfileState(data.user.profile);
           setRole(data.user.role);
           setName(data.user.username);
           setLoggedInUserId(data.user.id);
+          console.log(data);
         });
     }
-  }, [storedToken]);
+  }, [profile.length, storedToken]);
 
   return (
     <div>
       {storedToken && role === "celebrity" && (
         <Router>
-          <CelebrityNavBar name={name} profile={profile} />
+          <CelebrityNavBar name={name} profile_state={profile_state} />
 
           <Routes>
             <Route
               path="/"
-              element={<HomeCelebrity setStoredToken={setStoredToken} />}
+              element={
+                <HomeCelebrity
+                  setStoredToken={setStoredToken}
+                  profile_state={profile_state}
+                  loggedInUserId={loggedInUserId}
+                  profile={profile}
+                  setProfile={setProfile}
+                />
+              }
             />
             <Route
               path="/addprofile"
@@ -51,6 +62,11 @@ function App() {
             <Route
               path="/myprofile"
               element={<MyProfile loggedInUserId={loggedInUserId} />}
+            />
+            <Route
+              path="/addrates/:id"
+              element={<AddRates />}
+              loggedInUserId={loggedInUserId}
             />
           </Routes>
         </Router>

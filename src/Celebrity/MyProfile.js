@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-function MyProfile({ loggedInUserId }) {
-  const [profile, setProfile] = useState({});
+function MyProfile({ loggedInUserId, profile, setProfile }) {
   useEffect(() => {
     fetch(`/api/v1/my_profile/${loggedInUserId}`, {
       method: "GET",
@@ -23,6 +23,9 @@ function MyProfile({ loggedInUserId }) {
         <h1>{profile.stage_name}</h1>
         <h2>{profile.artist_type}</h2>
         <img src={profile.image} alt="profile" style={{ width: "200px" }} />
+        <Link to={`/addrates/${profile.id}`}>
+          <button>Add Rates</button>
+        </Link>
       </div>
     </div>
   );
