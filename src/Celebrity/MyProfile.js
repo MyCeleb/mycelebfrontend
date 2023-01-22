@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import MyRates from "./MyRates";
 
 function MyProfile({ loggedInUserId, profile, setProfile }) {
+  const [rates, setRates] = useState([]);
   useEffect(() => {
     fetch(`/api/v1/my_profile/${loggedInUserId}`, {
       method: "GET",
@@ -13,8 +15,12 @@ function MyProfile({ loggedInUserId, profile, setProfile }) {
       .then((res) => res.json())
       .then((data) => {
         setProfile(data);
+        console.log(data);
+        if (data.rates) {
+          setRates(data.rates);
+        }
       });
-  }, [loggedInUserId]);
+  }, [loggedInUserId, rates.length]);
 
   return (
     <div>
@@ -27,6 +33,7 @@ function MyProfile({ loggedInUserId, profile, setProfile }) {
           <button>Add Rates</button>
         </Link>
       </div>
+      <MyRates rates={rates} />
     </div>
   );
 }

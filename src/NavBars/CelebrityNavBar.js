@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function CelebrityNavBar({ name, profile_state }) {
+function CelebrityNavBar({ profile_state }) {
   console.log(profile_state);
   return (
     <div>

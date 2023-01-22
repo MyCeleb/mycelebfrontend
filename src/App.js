@@ -63,11 +63,7 @@ function App() {
               path="/myprofile"
               element={<MyProfile loggedInUserId={loggedInUserId} />}
             />
-            <Route
-              path="/addrates/:id"
-              element={<AddRates />}
-              loggedInUserId={loggedInUserId}
-            />
+            <Route path="/addrates/:id" element={<AddRates />} />
           </Routes>
         </Router>
       )}
