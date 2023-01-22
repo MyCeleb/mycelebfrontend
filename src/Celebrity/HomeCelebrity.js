@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import MyProfile from "./MyProfile";
 
-function HomeCelebrity({ setStoredToken }) {
+function HomeCelebrity({ setStoredToken , profile_state , loggedInUserId, profile, setProfile}) {
   const navigate = useNavigate();
 
   return (
@@ -17,7 +18,10 @@ function HomeCelebrity({ setStoredToken }) {
         }}
       >
         Log Out
+
       </button>
+
+      {profile_state && <MyProfile loggedInUserId={loggedInUserId} profile={profile} setProfile={setProfile} />}
     </div>
   );
 }
