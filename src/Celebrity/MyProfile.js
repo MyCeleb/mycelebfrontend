@@ -33,7 +33,7 @@ function MyProfile({ loggedInUserId, profile, setProfile }) {
           <button>Add Rates</button>
         </Link>
       </div>
-      <MyRates rates={rates} />
+      {rates.length > 0 && <MyRates rates={rates} />}
     </div>
   );
 }
